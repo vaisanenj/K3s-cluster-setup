@@ -1,0 +1,63 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: networkpolicy-gitea
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+  - from: #Allow traffik from traefik
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "traefik"
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: "traefik"
+  - from: #Allow monitoring from kube-prometheus-stack
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "kube-prometheus-stack"
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: "prometheus"
+  - from: #Allow tarffic to argocd
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "argocd"
+    - podSelector:
+        matchLabels:
+           app.kubernetes.io/name: argocd-server
+  egress:
+  - to: #Allow WAN
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
+  - to: #Allow DNS
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "kube-system"
+    - podSelector:
+        matchLabels:
+          k8s-app: "kube-dns"
+  - to: #Allow LDAP
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "openldap"
+    - podSelector:
+        matchLabels:
+          app: "openldap"
+    ports:
+    - protocol: TCP
+      port: 389
+  - to: #Allow DB
+    - podSelector:
+        matchLabels:
+          application: "mariadb"
+    ports:
+    - protocol: TCP
+      port: 3306

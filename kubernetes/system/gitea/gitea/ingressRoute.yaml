@@ -1,0 +1,15 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute-gitea
+  namespace: gitea
+spec:
+  entryPoints:
+    - local-https
+  routes:
+  - kind: Rule
+    match: Host(`gitea.local`)
+    services:
+    - kind: Service
+      name: svc-gitea
+      port: 3000

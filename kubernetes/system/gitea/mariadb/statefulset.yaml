@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+spec:
+  replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 1Gi
+  template:
+    metadata:
+    spec:
+     terminationGracePeriodSeconds: 1800
+     volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: mariadb-pvc
+     containers:
+      - name: mariadb
+        image: mariadb:10.7.8
+        env:
+        - name: TZ
+          value: Europe/Helsinki
+        - name: MARIADB_DATABASE
+          value: gitea        
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: gitea-secrets
+              key: db-password
+        - name: MARIADB_USER
+          valueFrom:
+            secretKeyRef:
+              name: gitea-secrets
+              key: db-user
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: gitea-secrets
+              key: db-root-password
+        volumeMounts:
+         - name: data
+           mountPath: /var/lib/mysql

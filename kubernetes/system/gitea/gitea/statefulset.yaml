@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: gitea
+spec:
+  replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 5Gi
+  template:
+    metadata:
+    spec:
+     volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: gitea-pvc
+     containers:
+      - name: gitea
+        image: gitea/gitea:1.18.5
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "512Mi"
+        env:
+        - name: TZ
+          value: Europe/Helsinki
+        - name: ROOT_URL 
+          value: https://gitea.local
+        - name: GITEA__database__DB_TYPE
+          value: mysql
+        - name: GITEA__database__HOST
+          value: svc-mariadb:3306
+        - name: GITEA__database__NAME
+          value: gitea
+        - name: GITEA__database__USER
+          valueFrom:
+            secretKeyRef:
+              name: gitea-secrets
+              key: db-user
+        - name: GITEA__database__PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: gitea-secrets
+              key: db-password
+        volumeMounts:
+         - name: data
+           mountPath: /data

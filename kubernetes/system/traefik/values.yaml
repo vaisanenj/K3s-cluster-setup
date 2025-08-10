@@ -1,0 +1,41 @@
+traefik:
+  deployment:
+    additionalVolumes:
+    - name: plugins
+  additionalVolumeMounts:
+  - name: plugins
+    mountPath: /plugins-storage
+  additionalArguments:
+  - "--api"
+  - "--api.dashboard=true"
+  - "--api.insecure=true"
+
+  ports:
+    web:
+      expose:
+        default: true
+      exposedPort: 8080
+    websecure:
+      expose:
+        default: true
+      exposedPort: 8443
+    local-http:
+      port: 80
+      expose:
+        default: true
+      exposedPort: 80
+    local-https:
+      port: 443
+      expose:
+        default: true
+      tls:
+        enabled: true
+      exposedPort: 443
+
+  ingressRoute:
+    dashboard:
+      enabled: true
+      matchRule: Host(`traefik.local`)
+      entryPoints: ['local-https']
+      annotations:
+        part-of: traefik-helm-installation

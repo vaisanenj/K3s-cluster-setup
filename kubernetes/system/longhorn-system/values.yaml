@@ -1,0 +1,6 @@
+longhorn:
+  preUpgradeChecker:
+    jobEnabled: false
+  
+  defaultBackupStore:
+    backupTarget: nfs://192.168.20.119:/volume2/Homelab-HDD/Backups/Longhorn-dev

@@ -1,0 +1,14 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute-kube-prometheus-stack
+spec:
+  entryPoints:
+    - local-https
+  routes:
+  - kind: Rule
+    match: Host(`grafana.local`)
+    services:
+    - kind: Service
+      name: grafana
+      port: 80
