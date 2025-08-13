@@ -25,3 +25,8 @@ HOX kaikki käynnistetään yhtä aikaa, jonka vuoksi ohjelmistot eivät päivit
 - Longhorn UI luo PVC aikaisempien nimien pohjalta
 7. Asenna gitea ja openldap myös
 8. Hae paikallisesta gitea reposta manifestit peliservuille, yms.
+
+
+Lisätään vault K3s-cluster setuppiin mukaan
+    - Tarvitsee traefikin
+    - Tarvitsee longhornin
