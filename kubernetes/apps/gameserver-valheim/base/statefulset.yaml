@@ -14,7 +14,7 @@ spec:
       storageClassName: longhorn-rc-2
       resources:
         requests:
-          storage: 15Gi
+          storage: 20Gi
   template:
     spec:
       containers:
