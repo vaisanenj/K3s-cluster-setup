@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: statefulset
+metadata:
+  name: valheim
+spec:
+  replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn-rc-2
+      resources:
+        requests:
+          storage: 15Gi
+  template:
+    spec:
+      containers:
+        - name: valheim
+          image: lloesche/valheim-server
+          resources:
+              requests:
+                cpu: "500m"
+                memory: "2Gi"
+              limit:
+                cpu: "4000m"
+                memory: "6Gi"
+          envFrom:
+            - configMapRef:
+                name: configmap-env
+          env:
+          - name: SERVER_NAME
+            valueFrom:
+              secretKeyRef:
+                name: valheim-secrets
+                key: name
+          - name: SERVER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: valheim-secrets
+                key: desc
+          volumeMounts:
+            - name: data
+              subPath: config
+              mountPath: /config
+            - name: data
+              subPath: data
+              mountPath: /opt/valheim
