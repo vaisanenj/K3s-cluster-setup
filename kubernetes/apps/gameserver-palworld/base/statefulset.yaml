@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: palworld
 spec:
-  replicas: 0
+  replicas: 1
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
@@ -11,7 +11,7 @@ spec:
       name: data
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: longhorn-rc-2
+      storageClassName: longhorn-rc-1
       resources:
         requests:
           storage: 20Gi
