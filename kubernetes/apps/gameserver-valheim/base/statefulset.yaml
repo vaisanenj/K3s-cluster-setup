@@ -35,12 +35,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: valheim-secrets
-                key: name
+                key: SERVER_NAME
           - name: SERVER_PASS
             valueFrom:
               secretKeyRef:
                 name: valheim-secrets
-                key: desc
+                key: SERVER_PASS
           volumeMounts:
             - name: data
               subPath: config
