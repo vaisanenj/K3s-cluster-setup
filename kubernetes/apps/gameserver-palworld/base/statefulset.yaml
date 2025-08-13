@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: palworld
 spec:
-  replicas: 1
+  replicas: 0
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
