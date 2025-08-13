@@ -32,7 +32,7 @@ spec:
                 name: configmap-env
           env:
           - name: PRE_UPDATE_CHECK_HOOK #Temp fix 
-            value: "sed -i -e s,Valheim/\",Valheim/5.4.2202/\", -e s,\.latest\.download_url,\.download_url, /usr/local/bin/bepinex-updater"
+            value: "sed -i -e s,Valheim/\",Valheim/5.4.2202/\", -e s,\\.latest\\.download_url,\\.download_url, /usr/local/bin/bepinex-updater"
           - name: SERVER_NAME
             valueFrom:
               secretKeyRef:
