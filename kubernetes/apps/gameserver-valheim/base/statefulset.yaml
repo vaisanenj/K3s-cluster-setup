@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: valheim
 spec:
-  replicas: 0
+  replicas: 1
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
