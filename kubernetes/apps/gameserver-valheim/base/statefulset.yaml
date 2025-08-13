@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: valheim
 spec:
-  replicas: 0
+  replicas: 1
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
@@ -14,7 +14,7 @@ spec:
       storageClassName: longhorn-rc-2
       resources:
         requests:
-          storage: 15Gi
+          storage: 20Gi
   template:
     spec:
       containers:
