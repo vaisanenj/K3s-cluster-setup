@@ -15,7 +15,7 @@ spec:
         directories:
           - path: kubernetes/apps/gitea
           - path: kubernetes/apps/openldap
-          - path: kubernetes/apps/gameserver-palworld/*
+          - path: kubernetes/apps/gameserver-palworld/overlay/*
   template:
     metadata:
       name: '{{.path.basenameNormalized}}'
