@@ -13,8 +13,9 @@ spec:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
         revision: main
         directories:
-          - path: kubernetes/system/gitea
-          - path: kubernetes/system/openldap
+          - path: kubernetes/apps/gitea
+          - path: kubernetes/apps/openldap
+          - path: kubernetes/apps/gameserver-palworld/*
   template:
     metadata:
       name: '{{.path.basenameNormalized}}'
