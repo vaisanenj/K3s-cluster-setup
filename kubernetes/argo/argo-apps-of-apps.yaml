@@ -15,6 +15,7 @@ spec:
         directories:
           - path: kubernetes/apps/gitea
           - path: kubernetes/apps/openldap
+          - path: kubernetes/apps/gameserver-enshrouded/overlay/*
           - path: kubernetes/apps/gameserver-palworld/overlay/*
           - path: kubernetes/apps/gameserver-valheim/overlay/*
   template:
