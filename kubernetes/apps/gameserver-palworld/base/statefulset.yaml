@@ -29,8 +29,8 @@ spec:
           name: queryport
         resources:
           requests:
-            cpu: "2500m"
-            memory: "4Gi"
+            cpu: "1500m"
+            memory: "24Gi"
           limits:
             cpu: "4000m"
             memory: "8Gi"

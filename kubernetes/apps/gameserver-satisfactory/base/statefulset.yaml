@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: satisfactory
+spec:
+  replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn-rc-2
+      resources:
+        requests:
+          storage: 20Gi
+  template:
+    spec:
+      containers:
+        - name: satisfactory
+          image: wolveix/satisfactory-server:v1
+          resources:
+            requests:
+              cpu: "2000m"
+              memory: "2Gi"
+            limits:
+              cpu: "4000m"
+              memory: "6Gi"
+          envFrom:
+            - configMapRef:
+                name: configmap-env
+          volumeMounts:
+            - name: data
+              mountPath: /config

@@ -17,6 +17,7 @@ spec:
           - path: kubernetes/apps/openldap
           - path: kubernetes/apps/gameserver-enshrouded/overlay/*
           - path: kubernetes/apps/gameserver-palworld/overlay/*
+          - path: kubernetes/apps/gameserver-satisfactory/overlay/*
           - path: kubernetes/apps/gameserver-valheim/overlay/*
   template:
     metadata:

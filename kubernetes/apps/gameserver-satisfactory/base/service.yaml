@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-satisfactory
+spec:
+  type: LoadBalancer
+  ports:
+    - name: game-port-udp
+      port: 7777
+      targetPort: 7777
+      protocol: UDP
+    - name: gameport-port-tcp
+      port: 7777
+      targetPort: 7777
+      protocol: TCP
