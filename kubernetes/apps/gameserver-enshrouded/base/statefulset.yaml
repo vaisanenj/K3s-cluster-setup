@@ -59,6 +59,6 @@ spec:
             secretKeyRef:
               name: enshrouded-secrets
               key: SERVER_ROLE_1_PASSWORD
-          volumeMounts:
-            - name: data
-              mountPath: /opt/enshrouded
+        volumeMounts:
+          - name: data
+            mountPath: /opt/enshrouded
