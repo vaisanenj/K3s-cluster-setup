@@ -20,7 +20,6 @@ spec:
           - path: kubernetes/system/traefik
           - path: kubernetes/system/longhorn-system
           - path: kubernetes/system/kube-prometheus-stack
-          - path: kubernetes/system/vault
   template:
     metadata:
       name: '{{.path.basenameNormalized}}'
