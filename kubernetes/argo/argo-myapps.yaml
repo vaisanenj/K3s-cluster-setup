@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: argo-apps-of-apps
+  name: argo-myapps
   namespace: argocd
 spec:
   syncPolicy:
@@ -10,10 +10,10 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
-        repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
-        revision: main
+        repoURL: http://svc-gitea.gitea:3000/vaisajon/Kube-apps
+        revision: HEAD
         directories:
-          - path: kubernetes/system/gitea
+          - path: kubernetes/apps/*
   template:
     metadata:
       name: '{{.path.basenameNormalized}}'
@@ -23,9 +23,11 @@ spec:
         server: https://kubernetes.default.svc
         namespace: '{{.path.basenameNormalized}}'
       source:
-        repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
+        repoURL: http://svc-gitea.gitea:3000/vaisajon/Kube-apps
         path: '{{.path.path}}'
-        targetRevision: main
+        targetRevision: HEAD
+        directory:
+          recurse: false
       syncPolicy:
         automated: {}
         syncOptions:
