@@ -10,6 +10,12 @@ traefik:
   - "--api.dashboard=true"
   - "--api.insecure=true"
 
+  metrics:
+    prometheus:
+      addEntryPointsLabels: true
+      addRoutersLabels: true
+      addServicesLabels: true
+
   ports:
     web:
       expose:
