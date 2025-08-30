@@ -11,10 +11,9 @@ traefik:
   - "--api.insecure=true"
 
   metrics:
+    addInternals: true
     prometheus:
-      addEntryPointsLabels: true
       addRoutersLabels: true
-      addServicesLabels: true
 
   ports:
     web:
@@ -37,6 +36,12 @@ traefik:
       tls:
         enabled: true
       exposedPort: 443
+    metrics:
+        port: 9100
+        expose:
+          default: true
+        exposedPort: 9100
+        protocol: TCP
 
   ingressRoute:
     dashboard:
