@@ -5,4 +5,11 @@ namespace: argocd
 resources:
   - argocd-ns.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0-rc3/manifests/install.yaml
-  - argo-system-setup.yaml
+
+configMapGenerator:
+  - name: argocd-cmd-params-cm
+    behavior: replace
+    literals:
+      - applicationsetcontroller.enable.progressive.syncs=true
+    options:
+      disableNameSuffixHash: true
