@@ -4,42 +4,34 @@ metadata:
   name: argo-system-setup
   namespace: argocd
 spec:
-  strategy:
-    type: RollingSync
-    rollingSync:
-      steps:
-        - matchExpressions:
-          - key: application
-            operator: In
-            values:
-              - external-secrets
-              - intel-device-manager
-              - metallb-system
-        - matchExpressions:
-          - key: application
-            operator: In
-            values:
-              - cert-manager
-              - traefik
-          maxUpdate: 0
-        - matchExpressions:
-          - key: application
-            operator: In
-            values:
-              - longhorn-system
-        - matchExpressions:
-          - key: application
-            operator: In
-            values:
-              - kube-prometheus-stack
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
         revision: dev
         directories:
           - path: kubernetes/system/*/*
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+          - key: sync-wave
+            operator: In
+            values:
+              - sync-wave-0
+        - matchExpressions:
+          - key: sync-wave
+            operator: In
+            values:
+              - sync-wave-1
+          maxUpdate: 0
+        - matchExpressions:
+          - key: sync-wave
+            operator: In
+            values:
+              - sync-wave-2
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   template:
     metadata:
       name: '{{.path.basenameNormalized}}'
@@ -54,11 +46,3 @@ spec:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
         path: '{{.path.path}}'
         targetRevision: dev
-      syncPolicy:
-        automated:
-          prune: true
-        syncOptions:
-          - CreateNamespace=true
-          - RespectIgnoreDifferences=true
-          - ServerSideApply=true
-          - Validate=false
