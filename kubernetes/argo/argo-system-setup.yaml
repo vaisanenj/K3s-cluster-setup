@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
 spec:
   syncPolicy:
+    rollingSync:
+      maxConcurrent: 1
     automated:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -20,6 +22,7 @@ spec:
           - path: kubernetes/system/traefik
           - path: kubernetes/system/longhorn-system
           - path: kubernetes/system/kube-prometheus-stack
+          - path: kubernetes/system/argo-cd
   template:
     metadata:
       name: '{{.path.basenameNormalized}}'
