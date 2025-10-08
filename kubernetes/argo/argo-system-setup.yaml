@@ -13,7 +13,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
-        revision: main
+        revision: dev
         directories:
           - path: kubernetes/system/metallb-system
           - path: kubernetes/system/intel-device-manager
@@ -34,7 +34,7 @@ spec:
       source:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
         path: '{{.path.path}}'
-        targetRevision: main
+        targetRevision: dev
       syncPolicy:
         automated: {}
         syncOptions:
