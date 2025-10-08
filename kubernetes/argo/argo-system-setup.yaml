@@ -4,10 +4,34 @@ metadata:
   name: argo-system-setup
   namespace: argocd
 spec:
-  syncPolicy:
+  strategy:
+    type: RollingSync
     rollingSync:
-      maxConcurrent: 1
-    automated:
+      steps:
+        - matchExpressions:
+          - key: application
+            operator: In
+            values:
+              - external-secrets
+              - intel-device-manager
+              - metallb-system
+        - matchExpressions:
+          - key: application
+            operator: In
+            values:
+              - cert-manager
+              - traefik
+          maxUpdate: 0
+        - matchExpressions:
+          - key: application
+            operator: In
+            values:
+              - longhorn-system
+        - matchExpressions:
+          - key: application
+            operator: In
+            values:
+              - kube-prometheus-stack
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
@@ -15,17 +39,12 @@ spec:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
         revision: dev
         directories:
-          - path: kubernetes/system/metallb-system
-          - path: kubernetes/system/intel-device-manager
-          - path: kubernetes/system/external-secrets
-          - path: kubernetes/system/cert-manager
-          - path: kubernetes/system/traefik
-          - path: kubernetes/system/longhorn-system
-          - path: kubernetes/system/kube-prometheus-stack
-          - path: kubernetes/system/argo-cd
+          - path: kubernetes/system/*/*
   template:
     metadata:
       name: '{{.path.basenameNormalized}}'
+      labels:
+        sync-wave: '{{index .path.segments 2}}'
     spec:
       project: default
       destination:
@@ -36,7 +55,8 @@ spec:
         path: '{{.path.path}}'
         targetRevision: dev
       syncPolicy:
-        automated: {}
+        automated:
+          prune: true
         syncOptions:
           - CreateNamespace=true
           - RespectIgnoreDifferences=true
