@@ -34,11 +34,11 @@ spec:
             operator: In
             values:
               - sync-wave-3
-        - matchExpressions:
-          - key: sync-wave
-            operator: In
-            values:
-              - sync-wave-4
+#        - matchExpressions:
+#          - key: sync-wave
+#            operator: In
+#            values:
+#              - sync-wave-4
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   template:
