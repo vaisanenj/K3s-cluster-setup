@@ -1,9 +1,0 @@
-apiVersion: longhorn.io/v1beta2
-kind: SystemRestore
-metadata:
-  name: restore-system
-  namespace: longhorn-system
-  annotations:
-    argocd.argoproj.io/hook: PreSync
-spec:
-  systemBackup: system-backup
