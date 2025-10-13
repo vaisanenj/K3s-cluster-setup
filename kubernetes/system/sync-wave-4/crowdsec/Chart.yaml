@@ -7,3 +7,6 @@ dependencies:
   - name: crowdsec
     version: 0.20.1
     repository: https://crowdsecurity.github.io/helm-charts
+  - name: crowdsec-traefik-bouncer
+    version: 0.1.4
+    repository: https://crowdsecurity.github.io/helm-charts

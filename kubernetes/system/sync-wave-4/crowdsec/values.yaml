@@ -17,6 +17,6 @@ crowdsec:
             name: crowdsec-secrets
             key: enroll-key
       - name: ENROLL_INSTANCE_NAME
-        value: "my-k8s-cluster"
+        value: "Kubernetes Cluster"
       - name: ENROLL_TAGS
-        value: "k8s linux test"
+        value: "Kubernetes K3s Linux"
