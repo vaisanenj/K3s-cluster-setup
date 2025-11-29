@@ -16,7 +16,7 @@ traefik:
       addRoutersLabels: true
 
   service:
-    externalTrafficPolicy: "Local"
+    externalTrafficPolicy: Local
 
   ports:
     web:
