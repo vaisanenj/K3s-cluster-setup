@@ -15,6 +15,9 @@ traefik:
     prometheus:
       addRoutersLabels: true
 
+  service:
+    externalTrafficPolicy: "Local"
+
   ports:
     web:
       expose:
