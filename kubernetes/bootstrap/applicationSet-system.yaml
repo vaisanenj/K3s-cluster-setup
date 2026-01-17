@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
-        revision: dev
+        revision: main
         directories:
           - path: kubernetes/system/*/*
   strategy:
@@ -55,7 +55,7 @@ spec:
       source:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
         path: '{{.path.path}}'
-        targetRevision: dev
+        targetRevision: main
       ignoreDifferences:
       - group: "apiextensions.k8s.io" #For ignoring MetalLb outofsync issue
         kind: CustomResourceDefinition
