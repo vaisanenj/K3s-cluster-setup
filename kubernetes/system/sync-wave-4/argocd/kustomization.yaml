@@ -6,7 +6,7 @@ resources:
   - argocd-ns.yaml
   - ExternalSecret.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0-rc3/manifests/install.yaml
-  - IngressRoute.yaml
+  - ingressRoute.yaml
   - applicationSet-system.yaml
 
 configMapGenerator:
