@@ -6,6 +6,7 @@ resources:
   - argocd-ns.yaml
   - externalSecret-admin.yaml
   - externalSecret-repository.yaml
+  - argocd-cmd-params-cm.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0-rc3/manifests/install.yaml
   - ingressRoute.yaml
   - applicationSet-system.yaml
