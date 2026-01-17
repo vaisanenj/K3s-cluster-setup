@@ -15,6 +15,6 @@ configMapGenerator:
     behavior: replace
     literals:
       - applicationsetcontroller.enable.progressive.syncs=true
-      - server.insecure=false
+      - server.insecure=true
     options:
       disableNameSuffixHash: true
