@@ -1,0 +1,74 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argo-system-setup
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
+        revision: dev
+        directories:
+          - path: kubernetes/system/*/*
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+          - key: sync-wave
+            operator: In
+            values:
+              - sync-wave-0
+        - matchExpressions:
+          - key: sync-wave
+            operator: In
+            values:
+              - sync-wave-1
+        - matchExpressions:
+          - key: sync-wave
+            operator: In
+            values:
+              - sync-wave-2
+        - matchExpressions:
+          - key: sync-wave
+            operator: In
+            values:
+              - sync-wave-3
+        - matchExpressions:
+          - key: sync-wave
+            operator: In
+            values:
+              - sync-wave-4
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  template:
+    metadata:
+      name: '{{.path.basenameNormalized}}'
+      labels:
+        sync-wave: '{{index .path.segments 2}}'
+        application: '{{.path.basenameNormalized}}'
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{.path.basenameNormalized}}'
+      source:
+        repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
+        path: '{{.path.path}}'
+        targetRevision: dev
+      ignoreDifferences:
+      - group: "apiextensions.k8s.io" #For ignoring MetalLb outofsync issue
+        kind: CustomResourceDefinition
+        name: bgppeers.metallb.io
+        jsonPointers:
+          - /spec/conversion/webhook/clientConfig/caBundle
+      - group: "apiextensions.k8s.io" #For Longhorn Out of Sync issues
+        kind: CustomResourceDefinition
+        jsonPointers:
+          - /spec/preserveUnknownFields
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - Validate=false
