@@ -7,6 +7,7 @@ resources:
   - ExternalSecret.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0-rc3/manifests/install.yaml
   - IngressRoute.yaml
+  - applicationSet-system.yaml
 
 configMapGenerator:
   - name: argocd-cmd-params-cm
