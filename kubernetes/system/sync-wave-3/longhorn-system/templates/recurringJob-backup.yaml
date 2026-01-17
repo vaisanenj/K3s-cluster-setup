@@ -1,0 +1,13 @@
+apiVersion: longhorn.io/v1beta2
+kind: RecurringJob
+metadata:
+  name: longhorn-backup-job
+spec:
+  cron: "30 */6 * * *"
+  task: "backup"
+  groups:
+    - default
+  retain: 50 # max value is 100
+  concurrency: 1
+  parameters:
+    full-backup-interval: "16" #Full backup every 4 day
