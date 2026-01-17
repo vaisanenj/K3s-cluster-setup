@@ -7,7 +7,6 @@ resources:
   - externalSecret-admin.yaml
   - externalSecret-repository.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0-rc3/manifests/install.yaml
-  - argocd-cmd-params-cm.yaml
   - ingressRoute.yaml
   - applicationSet-system.yaml
 
@@ -16,5 +15,6 @@ configMapGenerator:
     behavior: replace
     literals:
       - applicationsetcontroller.enable.progressive.syncs=true
+      - server.insecure=false
     options:
       disableNameSuffixHash: true
