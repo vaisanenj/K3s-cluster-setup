@@ -6,6 +6,7 @@ metadata:
 spec:
   entryPoints:
     - local-https
+    - local-http
   routes:
   - kind: Rule
     match: Host(`argocd.local`)
