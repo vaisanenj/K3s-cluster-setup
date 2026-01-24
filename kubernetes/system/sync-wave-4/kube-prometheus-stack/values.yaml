@@ -45,6 +45,7 @@ kube-prometheus-stack:
         - receiver: 'null'
           matchers:
             - alertname = "Watchdog"
+            - alertname = "InfoInhibitor"
       receivers:
       - name: "null"
       - name: discord-webhook
@@ -78,7 +79,7 @@ kube-prometheus-stack:
           targetLabel: instance
 
   kubeControllerManager:
-    enabled: true
+    enabled: false
 
   coreDns:
     enabled: true
@@ -90,10 +91,10 @@ kube-prometheus-stack:
     enabled: false
 
   kubeScheduler:
-    enabled: true
+    enabled: false
 
   kubeProxy:
-    enabled: true
+    enabled: false
 
   kubeStateMetrics:
     enabled: true
