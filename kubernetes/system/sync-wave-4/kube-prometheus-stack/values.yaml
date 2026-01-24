@@ -50,6 +50,9 @@ kube-prometheus-stack:
       receivers:
       - name: "null"
       - name: discord-k3s-nodes
+        discord_configs:
+        - webhook_url: https://discord.com/api/webhooks/YYYY/XXXX
+          send_resolved: true
 
   grafana:
     enabled: true
