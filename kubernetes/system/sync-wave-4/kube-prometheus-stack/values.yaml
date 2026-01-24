@@ -31,13 +31,25 @@ kube-prometheus-stack:
       prometheusOperator: true
 
   alertmanager:
-    enabled: true  
     fullnameOverride: alertmanager
-    useExistingSecret: true
+    enabled: true
     alertmanagerSpec:
       replicas: 1
       podAntiAffinity: "hard"
-      configSecret: alertmanager-custom-config
+    config:
+      global:
+        resolve_timeout: 5m
+      route:
+        receiver: discord-webhook
+        routes:
+        - receiver: 'null'
+          matchers:
+            - alertname = "Watchdog"
+      receivers:
+      - name: "null"
+      - name: discord-webhook
+        webhook_configs:
+        - url: http://svc-alertmanager-discord:9094
 
   grafana:
     enabled: true
