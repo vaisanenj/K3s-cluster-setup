@@ -42,7 +42,11 @@ kube-prometheus-stack:
       global:
         resolve_timeout: 5m
       route:
-      - receiver: "discord-k3s-nodes"
+        receiver: 'discord-k3s-nodes'
+        routes:
+        - receiver: 'null'
+          matchers:
+            - alertname = "Watchdog"
       receivers:
       - name: "null"
       - name: discord-k3s-nodes
