@@ -50,9 +50,10 @@ kube-prometheus-stack:
       receivers:
       - name: "null"
       - name: discord-k3s-nodes
-        discord_configs:
-        - webhook_url_file: /etc/alertmanager/secrets/alertmanager-secrets/discord-webhook-k3s-nodes
-          send_resolved: true
+      - name: testailua
+#        discord_configs:
+#        - webhook_url_file: /etc/alertmanager/secrets/alertmanager-secrets/discord-webhook-k3s-nodes
+#          send_resolved: true
 
   grafana:
     enabled: true
