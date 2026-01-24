@@ -37,20 +37,19 @@ kube-prometheus-stack:
       replicas: 1
       podAntiAffinity: "hard"
       secrets:
-      - alert-manager-secrets
-    
-#    config:
-#      global:
-#        resolve_timeout: 5m
-#      route:
-#      - receiver: "discrod-k3s-nodes"
-#      receivers:
-#      - name: "null"
-#      - name: discord-k3s-nodes
-#        slack_configs:
-#        - api_url_file: /etc/alertmanager/secrets/alertmanager-secrets/slack-api-url
-#          channel: "alerts-k3s-nodes"
-#          send_resolved: true
+      - alertmanager-secrets   
+    config:
+      global:
+        resolve_timeout: 5m
+      route:
+      - receiver: "discrod-k3s-nodes"
+      receivers:
+      - name: "null"
+      - name: discord-k3s-nodes
+        slack_configs:
+        - api_url_file: /etc/alertmanager/secrets/alertmanager-secrets/discord-webhook-k3s-nodes
+          channel: "alerts-k3s-nodes"
+          send_resolved: true
 
   grafana:
     enabled: true
