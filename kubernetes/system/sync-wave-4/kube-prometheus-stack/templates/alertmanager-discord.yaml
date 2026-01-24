@@ -21,6 +21,8 @@ spec:
             secretKeyRef:
               name: alertmanager-secrets
               key: discord-webhook-k3s-nodes
+        - name: DISCORD_USERNAME
+          value: k3s-alarms
 ---
 apiVersion: v1
 kind: Service
