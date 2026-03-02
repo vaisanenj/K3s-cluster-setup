@@ -164,6 +164,11 @@ kube-prometheus-stack:
   prometheus:
     enabled: true
     prometheusSpec:
+      additionalScrapeConfigs: |
+        - job_name: 'static-node-exporter'
+          scheme: http
+          static_configs:
+            - targets: ['192.168.20.245:9100']
       replicas: 1
       replicaExternalLabelName: "replica"
       ruleSelectorNilUsesHelmValues: false
