@@ -2,5 +2,8 @@ longhorn:
   preUpgradeChecker:
     jobEnabled: false
   
+  defaultSettings:
+    defaultDataPath: /mnt/longhorn
+
   defaultBackupStore:
     backupTarget: nfs://192.168.20.245:/mnt/Datapool-HDD-RAIDZ2/Kubernetes/Longhorn-system

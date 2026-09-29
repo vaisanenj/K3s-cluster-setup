@@ -3,9 +3,10 @@ kind: Kustomization
 
 namespace: argocd
 resources:
-  - ../system/sync-wave-4/argocd/argocd-ns.yaml
-  - ../system/sync-wave-4/argocd/applicationSet-system.yaml
+  - argocd-ns.yaml
+  - vault-secret.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0-rc3/manifests/install.yaml
+  - applicationSet-system.yaml
 
 configMapGenerator:
   - name: argocd-cmd-params-cm
