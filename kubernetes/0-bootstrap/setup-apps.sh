@@ -223,8 +223,9 @@ echo "New K3s installation is done"
 echo "Install 'system' applications next"
 kubectl apply -k .
 sleep 5
+kubectl apply -f argocd/applicationSet-system.yaml
 
-wait_for_appset argo-system-setup argocd
+wait_for_appset argo-system argocd
 
 #restore_longhorn_backup "automation" "pvc-58643349-ad55-44f4-92e9-7ee0f30956e1" "data-homeassistant-0"
 #restore_longhorn_backup "automation" "pvc-99a75591-395c-4009-a387-fca3f3e68647" "data-zigbee2mqtt-0"
