@@ -167,6 +167,21 @@ restore_longhorn_backup() {
     create_new_pvc $pv $values $pvc $ns
 }
 
+echo "Start K3s installation"
+sudo apt-get update -y && sudo apt-get upgrade -y
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - --disable=traefik --disable=servicelb --write-kubeconfig-mode=644
+
+echo "Install 'system' applications next"
+kubectl apply -k .
+sleep 5
+echo "Wait until argocd is installed and running"
+kubectl -n argocd rollout status deployment/argocd-server --timeout=5m
+
+echo "Install 'system' applications next and wait installations"
+kubectl apply -f argocd/applicationSet-system.yaml
+Sleep 5s
+kubectl wait --for=jsonpath='{.status.health.status}'=Healthy application --all -n argocd --timeout=5m
+
 #restore_longhorn_backup "automation" "pvc-58643349-ad55-44f4-92e9-7ee0f30956e1" "data-homeassistant-0"
 #restore_longhorn_backup "automation" "pvc-99a75591-395c-4009-a387-fca3f3e68647" "data-zigbee2mqtt-0"
 #restore_longhorn_backup "immich" "immich-library" "immich-library-pvc"
