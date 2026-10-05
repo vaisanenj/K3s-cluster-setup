@@ -1,47 +1,5 @@
 #!/bin/bash
 
-wait_for_appset() {
-    local appset_name="${1:?Error: ApplicationSet name is required}"
-    local namespace="${2:-argocd}"
-    local timeout="${APPSET_TIMEOUT:-600}"
-    local interval="${APPSET_INTERVAL:-10}"
-    
-    echo "Polling child applications of ApplicationSet '$appset_name' in namespace '$namespace'..."
-    
-    local start_time
-    start_time=$(date +%s)
-    
-    while [ $(( $(date +%s) - start_time )) -lt "$timeout" ]; do
-        # Query all child application sync and health statuses simultaneously
-        local statuses
-        statuses=$(kubectl get application -n "$namespace" -l "argoproj.io/application-set-name=$appset_name" \
-            -o jsonpath='{range .items[*]}{.status.sync.status} {.status.health.status} {end}' 2>/dev/null || true)
-
-        # 1. Check if the ApplicationSet has generated its items yet
-        if [ -z "${statuses// /}" ]; then
-            echo "[ $(( $(date +%s) - start_time ))s ] Waiting for ApplicationSet to generate child apps..."
-            sleep "$interval"
-            continue
-        fi
-
-        # 2. Verify readiness by filtering out valid 'Synced' and 'Healthy' tokens
-        local unready_statuses
-        unready_statuses=$(echo "$statuses" | tr ' ' '\n' | grep -vE '^(Synced|Healthy)$' || true)
-
-        if [ -z "$unready_statuses" ]; then
-            echo "Success! All child applications are Synced and Healthy."
-            return 0
-        fi
-
-        echo "[ $(( $(date +%s) - start_time ))s ] Workloads converging. Retrying..."
-        sleep "$interval"
-    done
-
-    echo "Error: Timeout reached after ${timeout}s before applications became ready."
-    return 1
-}
-
-
 format_bytes() {
     local bytes="$1"
 
@@ -58,7 +16,6 @@ format_bytes() {
         echo "${mi}Mi"
     fi
 }
-
 
 get_latest_backup_name() {
     local vol_name="$1"
@@ -154,7 +111,6 @@ spec:
   volumeMode: Filesystem
   accessModes: [ReadWriteOnce]
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: longhorn-best-effort-2-replica
   csi:
     driver: driver.longhorn.io
     volumeHandle: ${vol_name}
@@ -187,7 +143,6 @@ metadata:
   namespace: ${ns}
 spec:
   accessModes: [ReadWriteOnce]
-  storageClassName: longhorn-best-effort-2-replica
   volumeName: ${pv_name}
   resources:
     requests:
@@ -212,20 +167,6 @@ restore_longhorn_backup() {
     create_new_pvc $pv $values $pvc $ns
 }
 
-#echo "Start K3s installation"
-#sudo apt-get update -y && sudo apt-get upgrade -y
-#curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - --disable=traefik --disable=servicelb --write-kubeconfig-mode=644
-
-#echo "Show node status"
-#kubectl get nodes
-#echo "New K3s installation is done"
-
-#echo "Install 'system' applications next"
-#kubectl apply -k .
-#sleep 5
-#kubectl apply -f argocd/applicationSet-system.yaml
-#wait_for_appset argo-system argocd
-
 #restore_longhorn_backup "automation" "pvc-58643349-ad55-44f4-92e9-7ee0f30956e1" "data-homeassistant-0"
 #restore_longhorn_backup "automation" "pvc-99a75591-395c-4009-a387-fca3f3e68647" "data-zigbee2mqtt-0"
 #restore_longhorn_backup "immich" "immich-library" "immich-library-pvc"
@@ -234,4 +175,4 @@ restore_longhorn_backup() {
 restore_longhorn_backup "wireguard" "pvc-df8df800-3ec1-40e3-b556-d9e8ce05e5a5" "data-wireguard-0"
 
 echo "Install apps & gameservers next.."
-kubectl apply -f argocd/
+kubectl apply -f argocd/applicationSet-apps.yaml

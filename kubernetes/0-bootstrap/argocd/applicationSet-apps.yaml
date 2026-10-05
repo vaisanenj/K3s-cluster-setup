@@ -13,8 +13,8 @@ spec:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
         revision: main
         directories:
-          - path: kubernetes/apps/*
-          - path: kubernetes/gameservers/*/overlay/*
+          - path: kubernetes/2-apps/*
+          - path: kubernetes/3-gameservers/*/overlay/*
   template:
     metadata:
       name: '{{.path.basenameNormalized}}'
