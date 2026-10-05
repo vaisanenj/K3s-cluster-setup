@@ -1,0 +1,29 @@
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-epg
+spec:
+  schedule: "15 */6 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 3004
+          containers:
+          - name: update-epg
+            image: ghcr.io/vaisanenj/xmltv_epg:1.0
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+            - name: live-tv
+              mountPath: /output
+          restartPolicy: OnFailure
+          volumes:
+          - name: live-tv
+            nfs: 
+              server: 192.168.20.245
+              path: /mnt/Datapool-HDD-RAIDZ2/Media/live-tv

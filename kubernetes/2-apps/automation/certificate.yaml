@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: automation-certificate
+spec:
+  secretName: automation-certificate-secret
+  issuerRef:
+    name: cloudflare-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - hassio.vaisanen.cloud
+    - zigbee.vaisanen.cloud

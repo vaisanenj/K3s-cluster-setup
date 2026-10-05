@@ -1,0 +1,22 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute-hassio
+spec:
+  entryPoints:
+    - local-https
+  routes:
+  - kind: Rule
+    match: Host(`hassio.vaisanen.cloud`)
+    services:
+    - kind: Service
+      name: svc-homeassistant
+      port: 8123
+  - kind: Rule
+    match: Host(`zigbee.vaisanen.cloud`)
+    services:
+    - kind: Service
+      name: svc-zigbee2mqtt
+      port: 8080
+  tls:
+    secretName: automation-certificate-secret

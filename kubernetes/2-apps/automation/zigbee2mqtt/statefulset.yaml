@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zigbee2mqtt
+spec:
+  replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 512Mi
+  template:
+    spec:
+      nodeName: k3s-server03
+      volumes:
+        - name: zigbee-antenna
+          hostPath:
+            path: /dev/ttyACM0
+        - name: udev
+          hostPath:
+            path: /run/udev
+      containers:
+        - name: zigbee2mqtt
+          image: koenkk/zigbee2mqtt
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "100Mi"
+          volumeMounts:
+            - mountPath: /app/data
+              name: data
+            - mountPath: /dev/ttyACM0
+              name: zigbee-antenna
+            - mountPath: /run/udev
+              name: udev
+              readOnly: true

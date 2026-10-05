@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: homeassistant
+spec:
+  replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 2Gi
+  template:
+    spec:
+      volumes:
+        - name: host-ble
+          hostPath:
+            path: /run/dbus
+        - name: tz
+          hostPath:
+            path: /etc/localtime
+      containers:
+        - name: homeassistant
+          image: homeassistant/home-assistant:2025.12
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "1Gi"
+          volumeMounts:
+            - name: data
+              mountPath: /config
+            - name: host-ble
+              mountPath: /run/dbus
+            - name: tz
+              mountPath: /etc/localtime
+              readOnly: true

@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - mosquitto
+  - homeassistant
+  - zigbee2mqtt
+  - certificate.yaml
+  - ingressRoute.yaml
+
+commonAnnotations:
+  part-of: home-automation
+  managed-by: "kustomize"

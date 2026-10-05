@@ -1,0 +1,40 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-database
+spec:
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
+  instances: 1
+
+  #Dont allow pods to be run same nodes
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
+
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+
+  managed:
+    roles:
+      - connectionLimit: -1	
+        ensure: present	
+        inherit: true
+        name: immich
+        login: true
+        superuser: true
+        
+  storage:
+    storageClass: longhorn-local-replica-storage
+    size: 5Gi
+
+  bootstrap:
+    initdb:
+      database: immich
+      owner: immich
+      dataChecksums: true
+      postInitSQL:
+        - CREATE EXTENSION IF NOT EXISTS "vectors";
+        - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
+        - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;

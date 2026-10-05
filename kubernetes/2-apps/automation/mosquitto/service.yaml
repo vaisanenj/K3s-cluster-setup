@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-mqtt
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.20.204
+  ports:
+    - port: 1883
+      targetPort: 1883

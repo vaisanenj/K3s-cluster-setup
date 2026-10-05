@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jellyfin
+spec:
+  replicas: 0
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: config
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 12Gi
+  template:
+    spec:
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 3004
+      volumes:
+      - name: media
+        nfs: 
+          server: 192.168.20.245
+          path: /mnt/Datapool-HDD-RAIDZ2/Media
+      - name: tz
+        hostPath:
+          path: /usr/share/zoneinfo/Europe/Helsinki
+          type: File
+      containers:
+        - name: jellyfin
+          image: jellyfin/jellyfin:12.1
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "2Gi"
+              gpu.intel.com/i915: "1"
+            limits:
+              cpu: "4000m"
+              memory: "6Gi"
+              gpu.intel.com/i915: "1"
+          volumeMounts:
+            - name: media
+              mountPath: /media
+            - name: config
+              mountPath: /config
+            - name: tz
+              mountPath: /etc/localtime
+          readinessProbe:
+            httpGet:
+                path: /health
+                port: 8096
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 2

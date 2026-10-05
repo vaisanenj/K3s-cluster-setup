@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: mqtt-config
+      containers:
+        - name: mqtt
+          image: eclipse-mosquitto:2.0
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "256Mi"
+          volumeMounts:
+            - name: config
+              mountPath: /mosquitto/config/mosquitto.conf
+              subPath: config

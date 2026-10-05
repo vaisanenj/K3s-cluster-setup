@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: lyrion-media-server
+spec:
+  replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 5Gi
+  template:
+    spec:
+      volumes:
+      - name: audiobook
+        nfs: 
+          server: 192.168.20.245
+          path: /mnt/Datapool-HDD-RAIDZ2/Media/Audiobook
+      - name: music
+        nfs: 
+          server: 192.168.20.245
+          path: /mnt/Datapool-HDD-RAIDZ2/Media/Music
+      containers:
+        - name: logitect-media-server
+          image: lmscommunity/lyrionmusicserver:9.0.3
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "1024Mi"
+          env:
+          - name: PUID
+            value: "1001"
+          - name: PGID
+            value: "3004"
+          volumeMounts:
+            - name: audiobook
+              mountPath: /audiobook
+              readOnly: true
+            - name: music
+              mountPath: /music
+              readOnly: true
+            - name: data
+              subPath: config
+              mountPath: /config
+            - name: data
+              subPath: playlist
+              mountPath: /playlist
+#            - name: tz
+#              mountPath: /etc/localtime
+#          readinessProbe:
+#            httpGet:
+#                path: /health
+#                port: 8096
+#            initialDelaySeconds: 5
+#            periodSeconds: 5
+#            failureThreshold: 2

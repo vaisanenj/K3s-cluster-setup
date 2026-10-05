@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml
+  - service.yaml
+  - configMap.yaml
+
+commonAnnotations:
+  application: mqtt
+  managed-by: "kustomize"
+
+labels:
+  - includeSelectors: true
+    pairs:
+      application: mqtt
