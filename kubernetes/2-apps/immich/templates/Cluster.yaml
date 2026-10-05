@@ -15,15 +15,6 @@ spec:
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
-
-  managed:
-    roles:
-      - connectionLimit: -1	
-        ensure: present	
-        inherit: true
-        name: immich
-        login: true
-        superuser: true
         
   storage:
     storageClass: longhorn-strict-local-1-replica
@@ -33,6 +24,8 @@ spec:
     initdb:
       database: immich
       owner: immich
+      secret:
+        name: immich-db-app
       dataChecksums: true
       postInitSQL:
         - CREATE EXTENSION IF NOT EXISTS "vectors";
