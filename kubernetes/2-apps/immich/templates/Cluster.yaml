@@ -26,7 +26,7 @@ spec:
         superuser: true
         
   storage:
-    storageClass: longhorn-local-replica-storage
+    storageClass: longhorn-strict-local-1-replica
     size: 5Gi
 
   bootstrap:
