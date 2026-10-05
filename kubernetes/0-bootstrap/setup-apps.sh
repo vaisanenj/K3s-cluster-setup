@@ -109,7 +109,7 @@ spec:
   capacity:
     storage: "${volume_size}"
   volumeMode: Filesystem
-  storageClass: longhorn-strict-local-1-replica
+  storageClassName: longhorn-strict-local-1-replica
   accessModes: [ReadWriteOnce]
   persistentVolumeReclaimPolicy: Retain
   csi:
@@ -144,7 +144,7 @@ metadata:
   namespace: ${ns}
 spec:
   accessModes: [ReadWriteOnce]
-  storageClass: longhorn-strict-local-1-replica
+  storageClassName: longhorn-strict-local-1-replica
   volumeName: ${pv_name}
   resources:
     requests:
