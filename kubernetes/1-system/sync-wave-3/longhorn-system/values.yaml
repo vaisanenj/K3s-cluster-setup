@@ -10,3 +10,4 @@ longhorn:
   defaultBackupStore:
     backupTarget: "s3://longhorn.garage.truenas@garage/longhorn"
     backupTargetCredentialSecret: "s3-garage-credentials"
+    pollInterval: 60
