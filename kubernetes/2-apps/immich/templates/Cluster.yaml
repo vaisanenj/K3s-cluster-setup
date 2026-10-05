@@ -5,27 +5,30 @@ metadata:
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
   instances: 1
-
   #Dont allow pods to be run same nodes
-  affinity:
+  affinity: 
     enablePodAntiAffinity: true
     topologyKey: kubernetes.io/hostname
     podAntiAffinityType: required
-
   postgresql:
     shared_preload_libraries:
-      - "vectors.so"
-        
+      - "vectors.so"      
   storage:
     storageClass: longhorn-strict-local-1-replica
     size: 5Gi
-
+  superuserSecret:
+    name: db-superuser
+  managed:
+    roles:
+     - name: immich
+       ensure: present
+       login: true
+       passwordSecret:
+         name: db-app-user
   bootstrap:
     initdb:
-      database: immich
-      owner: immich
-      secret:
-        name: immich-db-app
+      database: immich_db
+      owner: immich        
       dataChecksums: true
       postInitSQL:
         - CREATE EXTENSION IF NOT EXISTS "vectors";
