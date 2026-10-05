@@ -1,9 +1,0 @@
-apiVersion: longhorn.io/v1beta2
-kind: BackupTarget
-metadata:
-  name: s3-garage
-  namespace: longhorn-system
-spec:
-  backupTargetURL: "s3://longhorn.garage.truenas@garage/longhorn"
-  credentialSecret: "s3-garage-credentials"
-  pollInterval: 5m0s
