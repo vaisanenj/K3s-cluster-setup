@@ -16,8 +16,6 @@ spec:
   storage:
     storageClass: longhorn-strict-local-1-replica
     size: 5Gi
-  superuserSecret:
-    name: db-superuser
   managed:
     roles:
      - name: immich
@@ -27,11 +25,11 @@ spec:
          name: db-app-user
   bootstrap:
     initdb:
-      database: immich_db
+      database: immich
       owner: immich        
       dataChecksums: true
       postInitApplicationSQL:
-        - GRANT ALL PRIVILEGES ON DATABASE immich_db TO immich;
+        - GRANT ALL PRIVILEGES ON DATABASE immich TO immich;
         - CREATE EXTENSION IF NOT EXISTS vectors CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;

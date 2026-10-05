@@ -18,7 +18,7 @@ immich:
                 secretKeyRef:
                   name: db-app-user
                   key: password
-            DB_DATABASE_NAME: immich_db
+            DB_DATABASE_NAME: immich
   immich:
     persistence:
       library:
