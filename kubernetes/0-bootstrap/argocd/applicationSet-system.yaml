@@ -9,7 +9,7 @@ spec:
         repoURL: https://github.com/vaisanenj/K3s-cluster-setup.git
         revision: main
         directories:
-          - path: kubernetes/system/*/*
+          - path: kubernetes/1-system/*/*
   strategy:
     type: RollingSync
     rollingSync:
