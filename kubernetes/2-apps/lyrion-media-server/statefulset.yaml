@@ -11,7 +11,7 @@ spec:
       name: data
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: longhorn
+      storageClassName: longhorn-strict-local-1-replica
       resources:
         requests:
           storage: 5Gi
