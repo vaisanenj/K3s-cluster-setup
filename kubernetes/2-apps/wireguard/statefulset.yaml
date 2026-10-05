@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: wireguard
+spec:
+  replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn-strict-local-1-replica
+      resources:
+        requests:
+          storage: 512Mi
+  template:
+    spec:
+      containers:
+        - name: wireguard
+          image: lscr.io/linuxserver/wireguard:latest
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "100Mi"
+            limits:
+              cpu: "100m"
+              memory: "200Mi"
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN", "SYS_MODULE"]
+          env:
+            - name: TZ
+              value: Europe/Helsinki
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: SERVERURL
+              value: ddns.vaisanen.cloud
+            - name: SERVERPORT
+              value: "51820"
+            - name: PEERS
+              value: joni,mira
+            - name: PEERDNS
+              value: 192.168.20.1
+            - name: INTERNAL_SUBNET
+              value: "192.168.90.0"
+            - name: ALLOWEDIPS
+              value: "0.0.0.0/0"
+            - name: LOG_CONFS
+              value: "true"
+          volumeMounts:
+            - mountPath: /config
+              subPath: config
+              name: data
+            - mountPath: /lib/modules
+              subPath: lib
+              name: data
