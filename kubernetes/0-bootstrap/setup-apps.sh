@@ -169,7 +169,7 @@ restore_longhorn_backup() {
     create_new_pvc $pv $values $pvc $ns
     
     sleep 2
-    kubectl apply -k ../2-apps/$ns
+    kubectl apply -k ../2-apps/$ns -n $ns
 }
 
 restore_longhorn_backup "wireguard" "pvc-df8df800-3ec1-40e3-b556-d9e8ce05e5a5" "data-wireguard-0"
