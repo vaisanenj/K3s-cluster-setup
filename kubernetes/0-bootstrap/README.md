@@ -1,10 +1,15 @@
 #Before running set vault-secret to correct for this installation
 
-Installation is grouped to different phases:
-  - Phase 1: Uninstall K3s if exists and reinstall new it
-        - disable traefik (It will be installed with helm)
-        - disable servicelb (Metalb is used instead)
-  - Phase 2: Install 'system' applications that are needed for cluster
+Install K3s Cluster with following command:
+url -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - --disable=traefik --disable=servicelb --write-kubeconfig-mode=644
+
+kubectl apply -k /kubernetes/0-bootstrap
+kubectl apply -f /kubernetes/0-bootstrap/argocd/applicationSet-apps.yaml
+-- Setups is now done
+
+# Install applications
+Restore backups with setup-apps.sh script
+
 
 Käynnistys homma:
     - 1. Argocd käyntiin ja taustajärjestelmät pystyyn (1-system sisältö)
