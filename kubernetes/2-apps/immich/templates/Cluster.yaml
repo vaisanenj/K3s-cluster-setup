@@ -30,7 +30,7 @@ spec:
       database: immich_db
       owner: immich        
       dataChecksums: true
-      postInitSQL:
+      postInitApplicationSQL:
         - GRANT ALL PRIVILEGES ON DATABASE immich_db TO immich;
         - CREATE EXTENSION IF NOT EXISTS vectors CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
