@@ -6,26 +6,18 @@ immich:
           image:
             tag: v2.0.0
           env:
-            DB_HOSTNAME:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-database-app
-                  key: host
+            DB_HOSTNAME: immich-database-rw
             DB_USERNAME:
               valueFrom:
                 secretKeyRef:
-                  name: immich-database-app
-                  key: user
+                  name: db-app-user
+                  key: username
             DB_PASSWORD:
               valueFrom:
                 secretKeyRef:
-                  name: immich-database-app
+                  name: db-app-user
                   key: password
-            DB_DATABASE_NAME:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-database-app
-                  key: dbname
+            DB_DATABASE_NAME: immich_db
   immich:
     persistence:
       library:
