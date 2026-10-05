@@ -181,11 +181,11 @@ kubectl -n argocd rollout status deployment/argocd-server --timeout=5m
 
 echo "Install 'system' applications next and wait installations"
 kubectl apply -f argocd/applicationSet-system.yaml
-Sleep 5s
+Sleep 5
 kubectl -n argocd wait --for=jsonpath='{.status.health.status}'=Healthy application --all --timeout=5m
 
 echo "sleep 90s to wait longhorn poll backups"
-sleep 90s
+sleep 90
 
 #restore_longhorn_backup "automation" "pvc-58643349-ad55-44f4-92e9-7ee0f30956e1" "data-homeassistant-0"
 #restore_longhorn_backup "automation" "pvc-99a75591-395c-4009-a387-fca3f3e68647" "data-zigbee2mqtt-0"
