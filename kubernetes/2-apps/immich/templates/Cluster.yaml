@@ -21,6 +21,8 @@ spec:
      - name: immich
        ensure: present
        login: true
+       #Immich needs to be superuser rights to generate db dumps
+       superuser: true
        passwordSecret:
          name: db-app-user
   bootstrap:
