@@ -20,6 +20,8 @@ spec:
     roles:
      - name: immich
        ensure: present
+       connectionLimit: -1
+       inherit: true
        login: true
        #Immich needs to be superuser rights to generate db dumps
        superuser: true
