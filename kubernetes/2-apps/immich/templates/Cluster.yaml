@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: immich-database
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16-1.1.1
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18-1.1.1
   instances: 1
   #Dont allow pods to be run same nodes
   affinity: 
@@ -11,12 +11,7 @@ spec:
     topologyKey: kubernetes.io/hostname
     podAntiAffinityType: required
   postgresql:
-    extensions:
-    - name: pgvector
-      image:
-        reference: ghcr.io/cloudnative-pg/pgvector:0.8.6-16-trixie
     shared_preload_libraries:
-      - "vectors.so"
       - "vchord.so"    
   storage:
     storageClass: longhorn-strict-local-1-replica
