@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: immich-database
 spec:
-  imageName: ghcr.io/immich-app/postgres:16-vectorchord1.1.1-pgvector0.8.5
+  imageName: ghcr.io/immich-app/postgres:16-vectorchord1.1.1
   instances: 1
   #Dont allow pods to be run same nodes
   affinity: 
@@ -35,7 +35,6 @@ spec:
       postInitApplicationSQL:
         - GRANT ALL PRIVILEGES ON DATABASE immich TO immich;
         - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
-        - CREATE EXTENSION IF NOT EXISTS vectors CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
         - GRANT USAGE ON SCHEMA vectors TO immich;
