@@ -12,8 +12,7 @@ spec:
     podAntiAffinityType: required
   postgresql:
     shared_preload_libraries:
-      - "vchord.so"
-      - "vectors.so"      
+      - "vchord.so"  
   storage:
     storageClass: longhorn-strict-local-1-replica
     size: 5Gi
