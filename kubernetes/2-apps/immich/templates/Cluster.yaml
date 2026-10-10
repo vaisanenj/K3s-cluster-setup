@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: immich-database
 spec:
-  imageName: ghcr.io/corentingiraud/cnpg-pgvector-vectorchord
+  imageName: ghcr.io/corentingiraud/cnpg-pgvector-vectorchord:16-migration
   instances: 1
   #Dont allow pods to be run same nodes
   affinity: 
