@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: immich-database
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
+  imageName: ghcr.io/cloudnative-pg/pgvector:0.8.6-18-bookworm
   instances: 1
   #Dont allow pods to be run same nodes
   affinity: 
