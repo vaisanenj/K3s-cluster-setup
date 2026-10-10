@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: immich-database
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:15.19
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.15
   instances: 1
   #Dont allow pods to be run same nodes
   affinity: 
