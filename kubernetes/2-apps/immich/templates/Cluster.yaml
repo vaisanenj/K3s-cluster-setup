@@ -13,7 +13,6 @@ spec:
   postgresql:
     shared_preload_libraries:
       - "vchord.so"
-      - "vectors.so"      
   storage:
     storageClass: longhorn-strict-local-1-replica
     size: 5Gi
@@ -36,7 +35,6 @@ spec:
       postInitApplicationSQL:
         - GRANT ALL PRIVILEGES ON DATABASE immich TO immich;
         - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
-        - CREATE EXTENSION IF NOT EXISTS vectors CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
         - GRANT USAGE ON SCHEMA vectors TO immich;
