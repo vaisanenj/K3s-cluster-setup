@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: lyrion-media-server
 spec:
-  replicas: 1
+  replicas: 0
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
@@ -11,7 +11,7 @@ spec:
       name: data
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: longhorn-strict-local-1-replica
+      storageClassName: longhorn-best-effort
       resources:
         requests:
           storage: 5Gi
