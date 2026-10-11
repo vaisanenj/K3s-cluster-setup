@@ -1,0 +1,37 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: networkpolicy-wireguard
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress: #Allows ingress from all pods within this same namespace
+  - from:
+    - podSelector: {}
+  egress:
+  - to: #Allow to WAN
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
+  - to: #Allow to traffik 
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "traefik"
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: "traefik"
+  - to: #Allow to pc
+    - ipBlock:
+        cidr: 192.168.10.100/32
+  - to: #Allow to DNS
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "kube-system"
+    - podSelector:
+        matchLabels:
+          k8s-app: "kube-dns"
