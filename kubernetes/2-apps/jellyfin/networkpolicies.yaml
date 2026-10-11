@@ -40,13 +40,3 @@ spec:
     - podSelector:
         matchLabels:
           k8s-app: "kube-dns"
-  - to: #Allow to LDAP
-    - namespaceSelector:
-        matchLabels:
-          kubernetes.io/metadata.name: "openldap"
-    - podSelector:
-        matchLabels:
-          app: "openldap"
-    ports:
-    - protocol: TCP
-      port: 389
