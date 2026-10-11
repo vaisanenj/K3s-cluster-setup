@@ -8,7 +8,7 @@ spec:
     - local-https
   routes:
   - kind: Rule
-    match: Host(`jellyfin.homelab`)
+    match: Host(`jellyfin.k3s.internal`)
     services:
     - kind: Service
       name: svc-jellyfin

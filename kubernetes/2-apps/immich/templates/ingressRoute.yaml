@@ -8,7 +8,7 @@ spec:
     - local-http
   routes:
   - kind: Rule
-    match: Host(`immich.homelab`)
+    match: Host(`immich.k3s.internal`)
     services:
     - kind: Service
       name: immich-server
