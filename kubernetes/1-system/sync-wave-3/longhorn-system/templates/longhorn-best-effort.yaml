@@ -1,12 +1,19 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: longhorn-best-effort-2-replica
+  name: longhorn-best-effort
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
 parameters:
-  numberOfReplicas: "2"
+  numberOfReplicas: "1"
   staleReplicaTimeout: "30"
   dataLocality: "best-effort"
+  recurringJobSelector: |
+    [
+      {
+        "name": "daily-backup",
+        "isGroup": false
+      }
+    ]
