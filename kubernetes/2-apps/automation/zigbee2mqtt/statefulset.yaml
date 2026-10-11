@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: zigbee2mqtt
 spec:
-  replicas: 0
+  replicas: 1
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
@@ -17,7 +17,6 @@ spec:
           storage: 512Mi
   template:
     spec:
-      nodeName: k3s-server03
       volumes:
         - name: zigbee-antenna
           hostPath:
