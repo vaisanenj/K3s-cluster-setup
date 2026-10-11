@@ -58,6 +58,7 @@ metadata:
 spec:
   size: "$vol_size"
   numberOfReplicas: $replicas
+  restoreVolumeRecurringJob: enabled
   fromBackup: "$backup_url"
   frontend: blockdev
   dataEngine: v1
