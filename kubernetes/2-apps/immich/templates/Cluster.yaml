@@ -4,7 +4,7 @@ metadata:
   name: immich-database
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16-1.1.1
-  instances: 2
+  instances: 1
   #Dont allow pods to be run same nodes
 #  affinity: 
 #    enablePodAntiAffinity: true
