@@ -1,9 +1,20 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: wireguard
 spec:
   replicas: 1
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn-best-effort
+      resources:
+        requests:
+          storage: 32Mi
   template:
     spec:
       containers:
@@ -36,3 +47,10 @@ spec:
               value: 192.168.20.1
             - name: LOG_CONFS
               value: "true"
+          volumeMounts:
+            - mountPath: /config
+              subPath: config
+              name: data
+            - mountPath: /lib/modules
+              subPath: lib
+              name: data
