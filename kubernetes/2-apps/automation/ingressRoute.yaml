@@ -5,15 +5,16 @@ metadata:
 spec:
   entryPoints:
     - local-https
+    - local-http
   routes:
   - kind: Rule
-    match: Host(`hassio.vaisanen.cloud`)
+    match: Host(`hassio.k3s.internal`)
     services:
     - kind: Service
       name: svc-homeassistant
       port: 8123
   - kind: Rule
-    match: Host(`zigbee.vaisanen.cloud`)
+    match: Host(`zigbee2mqtt.k3s.internal`)
     services:
     - kind: Service
       name: svc-zigbee2mqtt
