@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: immich-database
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
+  imageName: http://ghcr.io/immich-app/postgres:16-vectorchord0.4.3-pgvectors0.2.0
   instances: 1
   #Dont allow pods to be run same nodes
   affinity: 
@@ -12,7 +12,7 @@ spec:
     podAntiAffinityType: required
   postgresql:
     shared_preload_libraries:
-      - "vectors.so"      
+      - "vchord.so"
   storage:
     storageClass: longhorn-strict-local-1-replica
     size: 5Gi
@@ -34,7 +34,7 @@ spec:
       dataChecksums: true
       postInitApplicationSQL:
         - GRANT ALL PRIVILEGES ON DATABASE immich TO immich;
-        - CREATE EXTENSION IF NOT EXISTS vectors CASCADE;
+        - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
         - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
         - GRANT USAGE ON SCHEMA vectors TO immich;
