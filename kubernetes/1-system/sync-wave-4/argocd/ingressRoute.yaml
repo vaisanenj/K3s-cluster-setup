@@ -9,7 +9,7 @@ spec:
     - local-http
   routes:
   - kind: Rule
-    match: Host(`argocd.local`)
+    match: Host(`argocd.k3s.internal`)
     services:
     - kind: Service
       name: argocd-server

@@ -5,9 +5,10 @@ metadata:
 spec:
   entryPoints:
     - local-https
+    - local-http
   routes:
   - kind: Rule
-    match: Host(`grafana.local`)
+    match: Host(`grafana.k3s.internal`)
     services:
     - kind: Service
       name: grafana
