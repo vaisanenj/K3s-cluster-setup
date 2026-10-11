@@ -14,7 +14,7 @@ spec:
     shared_preload_libraries:
       - "vchord.so"
   storage:
-    storageClass: longhorn-strict-local-1-replica
+    storageClass: longhorn-strict-local
     size: 5Gi
   managed:
     roles:
