@@ -6,9 +6,10 @@ metadata:
 spec:
   entryPoints:
     - local-https
+    - local-http
   routes:
   - kind: Rule
-    match: Host(`longhorn.local`)
+    match: Host(`longhorn.k3s.internal`)
     services:
     - kind: Service
       name: longhorn-frontend
