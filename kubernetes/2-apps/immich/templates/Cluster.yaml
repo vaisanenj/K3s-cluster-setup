@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: immich-database
 spec:
-  imageName: http://ghcr.io/immich-app/postgres:16-vectorchord0.4.3-pgvectors0.2.0
+  imageName: ghcr.io/immich-app/postgres:16-vectorchord0.4.3-pgvectors0.2.0
   instances: 1
   #Dont allow pods to be run same nodes
   affinity: 
