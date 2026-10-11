@@ -4,7 +4,6 @@ resources:
   - statefulset.yaml
   - networkpolicies.yaml
   - service.yaml
-  - certificate.yaml
   - ingressRoute.yaml
   - cronJob.yaml
 
