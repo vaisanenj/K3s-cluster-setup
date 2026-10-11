@@ -4,7 +4,7 @@ metadata:
   name: ingressroute-jellyfin
 spec:
   entryPoints:
-    - wlocal-http
+    - local-http
     - local-https
   routes:
   - kind: Rule
