@@ -9,6 +9,9 @@ spec:
     kind: PersistentVolumeClaim
     metadata:
       name: config
+      labels:
+        recurring-job.longhorn.io/source: enabled
+        recurring-job-group.longhorn.io/daily-backup: "enabled"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: longhorn-strict-local-1-replica
