@@ -109,7 +109,7 @@ spec:
   capacity:
     storage: "${volume_size}"
   volumeMode: Filesystem
-  storageClassName: longhorn-strict-local-1-replica
+  storageClassName: longhorn-best-effort
   accessModes: [ReadWriteOnce]
   persistentVolumeReclaimPolicy: Retain
   csi:
@@ -144,7 +144,7 @@ metadata:
   namespace: ${ns}
 spec:
   accessModes: [ReadWriteOnce]
-  storageClassName: longhorn-strict-local-1-replica
+  storageClassName: longhorn-best-effort
   volumeName: ${pv_name}
   resources:
     requests:
@@ -172,12 +172,12 @@ restore_longhorn_backup() {
     kubectl apply -k ../2-apps/$ns -n $ns
 }
 
-restore_longhorn_backup "wireguard" "pvc-df8df800-3ec1-40e3-b556-d9e8ce05e5a5" "data-wireguard-0"
+restore_longhorn_backup "wireguard" "wireguard-data" "data-wireguard-0"
 restore_longhorn_backup "automation" "pvc-58643349-ad55-44f4-92e9-7ee0f30956e1" "data-homeassistant-0"
 restore_longhorn_backup "automation" "pvc-99a75591-395c-4009-a387-fca3f3e68647" "data-zigbee2mqtt-0"
-restore_longhorn_backup "lyrion-media-server" "pvc-4cd62879-b835-4a84-ac6e-8ebf1b07021f" "data-lyrion-media-server-0"
-restore_longhorn_backup "jellyfin" "pvc-c676729b-ce99-4e8e-affc-d2a248999678" "config-jellyfin-0"
-restore_longhorn_backup "immich" "immich-library" "immich-library-pvc"
+restore_longhorn_backup "lyrion-media-server" "lyrion-media-server-data" "data-lyrion-media-server-0"
+restore_longhorn_backup "jellyfin" "jellyfin-config" "config-jellyfin-0"
+restore_longhorn_backup "immich" "immich-data" "immich-data"
 
 echo "Install apps & gameservers next.."
 kubectl apply -f argocd/applicationSet-apps.yaml
