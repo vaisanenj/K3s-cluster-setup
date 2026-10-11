@@ -9,8 +9,8 @@ spec:
     kind: PersistentVolumeClaim
     metadata:
       name: data
-      labels:
-        recurring-job.longhorn.io/daily-backup: enabled
+#      labels:
+#        recurring-job.longhorn.io/daily-backup: enabled
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: longhorn-best-effort
