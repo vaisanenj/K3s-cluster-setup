@@ -10,7 +10,7 @@ parameters:
   numberOfReplicas: "1"
   staleReplicaTimeout: "30"
   dataLocality: "best-effort"
-  restoreVolumeRecurringJob: "enabled" 
+#  restoreVolumeRecurringJob: "enabled" 
   recurringJobSelector: |
     [
       {
