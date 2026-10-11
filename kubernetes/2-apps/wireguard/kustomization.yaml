@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - statefulset.yaml
   - service.yaml
+  - networkpolicies.yaml
 
 commonAnnotations:
   application: wireguard
