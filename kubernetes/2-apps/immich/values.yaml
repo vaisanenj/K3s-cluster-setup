@@ -1,11 +1,11 @@
 immich:
   controllers:
     main:
-      replicas: 0
+      replicas: 1
       containers:
         main:
           image:
-            tag: v3.3.0
+            tag: v3.3.1
           env:
             DB_HOSTNAME: immich-database-rw
             DB_USERNAME:
@@ -22,7 +22,7 @@ immich:
   immich:
     persistence:
       library:
-        existingClaim: immich-library-pvc
+        existingClaim: immich-data
 
   valkey:
     enabled: true
