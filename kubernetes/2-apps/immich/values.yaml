@@ -1,11 +1,11 @@
 immich:
   controllers:
     main:
-      replicas: 0
+      replicas: 1
       containers:
         main:
           image:
-            tag: v2.7.5
+            tag: v3.0.0
           env:
             DB_HOSTNAME: immich-database-rw
             DB_USERNAME:
