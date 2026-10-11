@@ -4,12 +4,12 @@ metadata:
   name: immich-database
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16-1.1.1
-  instances: 1
+  instances: 2
   #Dont allow pods to be run same nodes
-  affinity: 
-    enablePodAntiAffinity: true
-    topologyKey: kubernetes.io/hostname
-    podAntiAffinityType: required
+#  affinity: 
+#    enablePodAntiAffinity: true
+#    topologyKey: kubernetes.io/hostname
+#    podAntiAffinityType: required
   postgresql:
     shared_preload_libraries:
       - "vchord.so"
