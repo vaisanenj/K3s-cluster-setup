@@ -4,7 +4,7 @@ metadata:
   name: ingressroute-jellyfin
 spec:
   entryPoints:
-    - websecure
+    - wlocal-http
     - local-https
   routes:
   - kind: Rule
@@ -13,5 +13,3 @@ spec:
     - kind: Service
       name: svc-jellyfin
       port: 8096
-  tls:
-    secretName: jellyfin-certificate-secret
