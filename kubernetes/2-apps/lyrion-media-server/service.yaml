@@ -16,9 +16,6 @@ spec:
     - name: port3483tcp
       port: 3483
       protocol: TCP
-    - name: port18764tcp
-      port: 18764
-      protocol: TCP
     - name: port3483udp
       port: 3483
       protocol: UDP
