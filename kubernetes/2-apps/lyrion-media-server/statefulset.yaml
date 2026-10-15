@@ -28,7 +28,7 @@ spec:
           path: /mnt/Datapool-HDD-RAIDZ2/Media/Music
       containers:
         - name: logitect-media-server
-          image: lmscommunity/lyrionmusicserver:9.0.3
+          image: lmscommunity/lyrionmusicserver:9.2.0
           resources:
             requests:
               cpu: "100m"
