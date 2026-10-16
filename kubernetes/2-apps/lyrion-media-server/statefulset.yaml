@@ -17,6 +17,7 @@ spec:
           storage: 5Gi
   template:
     spec:
+      hostNetwork: true #Test to have mDNS and UDP broadcast packets
       volumes:
       - name: audiobook
         nfs: 
